@@ -114,9 +114,9 @@ test.describe('暗黑模式 - E2E 验收测试', () => {
     await page.waitForTimeout(400)
 
     await expect(page.locator('html')).toHaveClass(/dark/)
-    // banner 区域文字为浅色（rice-100），背景为深色（charcoal-900）
-    const banner = page.locator('.bg-charcoal-900.text-rice-100').first()
-    await expect(banner).toBeVisible()
+    // 验证 body 背景色为暗黑（#211f1c），无浅色残留
+    const bgColor = await page.evaluate(() => getComputedStyle(document.body).backgroundColor)
+    expect(bgColor).toBe('rgb(33, 31, 28)')
   })
 
   test('REQ-004: 暗黑模式下菜单视图无浅色背景残留', async ({ page }) => {
