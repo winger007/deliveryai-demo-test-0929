@@ -15,6 +15,16 @@
         } catch (e) {
           // localStorage 不可用时保持默认中文
         }
+        // 同步设置初始暗黑模式，防止主题闪烁
+        try {
+          var stored = localStorage.getItem('dark-mode');
+          var isDark = stored === 'true' || (stored !== 'false' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          // localStorage 或 matchMedia 不可用时降级为浅色默认
+        }
       })();
     </script>
   </head>
